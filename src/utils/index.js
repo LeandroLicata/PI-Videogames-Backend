@@ -13,7 +13,7 @@ const getDbVideogames = async () => {
       platforms: videogame.platforms,
       genres: videogame.genres,
       background_image: videogame.background_image,
-      createdInDb,
+      createdInDb: videogame.createdInDb,
     };
   });
   return dbVideogamesClean;
