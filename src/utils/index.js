@@ -63,7 +63,7 @@ const findVideogames = async (name) => {
     `https://api.rawg.io/api/games?key=${API_KEY}&search=${name}`
   );
   const filteredApiVideogames = response.data.results.map((videogame) => {
-    const platforms = videogame.platforms.map(
+    const platforms = videogame.platforms?.map(
       (platform) => platform.platform.name
     );
     const genres = videogame.genres.map((genre) => genre.name);
