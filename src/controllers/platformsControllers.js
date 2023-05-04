@@ -15,15 +15,15 @@ try {
     const platformsData = response.data.results;
 
     const promises = platformsData.map((platform) => Platform.findOneAndUpdate(
-      { name: platform.name },
-      { name: platform.name },
+      { name: platform.name, id: platform.id },
+      { name: platform.name, id: platform.id },
       { upsert: true, new: true }
     ));
 
     const platformsCreated = await Promise.all(promises);
 
-    const platformsShown = platformsCreated.map(({ _id, name }) => ({
-      id: _id,
+    const platformsShown = platformsCreated.map(({ id, name }) => ({
+      id,
       name,
     }));
 

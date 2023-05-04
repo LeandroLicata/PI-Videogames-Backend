@@ -3,7 +3,7 @@ const axios = require("axios");
 const { API_KEY } = process.env;
 
 const getGenres = async (req, res) => {
-try {
+  try {
     const genres = await Genre.find();
     if (genres.length) {
       return res.status(200).json(genres);
@@ -14,17 +14,20 @@ try {
     );
     const genresData = response.data.results;
 
-    const promises = genresData.map((genre) => Genre.findOneAndUpdate(
-      { name: genre.name },
-      { name: genre.name },
-      { upsert: true, new: true }
-    ));
+    const promises = genresData.map((genre) =>
+      Genre.findOneAndUpdate(
+        { name: genre.name, slug: genre.slug },
+        { name: genre.name, slug: genre.slug },
+        { upsert: true, new: true }
+      )
+    );
 
     const genresCreated = await Promise.all(promises);
 
-    const genresShown = genresCreated.map(({ _id, name }) => ({
+    const genresShown = genresCreated.map(({ _id, name, slug }) => ({
       id: _id,
       name,
+      slug,
     }));
 
     return res.status(200).json(genresShown);
@@ -32,7 +35,6 @@ try {
     console.log(error);
     return res.status(500).send("Internal Server Error");
   }
-
 };
 
-module.exports = { getGenres }
+module.exports = { getGenres };
