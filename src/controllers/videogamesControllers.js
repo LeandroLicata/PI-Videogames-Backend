@@ -19,8 +19,6 @@ const createVideogame = async (req, res) => {
       createdInDb,
     } = req.body;
 
-    console.log("req.body:", req.body);
-
     const newVideogame = new Videogame({
       name,
       released,
@@ -40,8 +38,8 @@ const createVideogame = async (req, res) => {
 };
 
 const getVideogames = async (req, res) => {
-  const { name } = req.query;
-  let results = name ? await findVideogames(name) : await getAllVideogames();
+  const { name, genres, platforms } = req.query;
+  let results = await getAllVideogames(name, genres, platforms);
   results.length
     ? res.status(200).json(results)
     : res.status(404).send("Videogame not found :(");
@@ -49,7 +47,7 @@ const getVideogames = async (req, res) => {
 
 const getVideogameById = async (req, res) => {
   const { id } = req.params;
-  // console.log(id)
+
   try {
     const result = await findVideogame(id);
     if (result) {
@@ -101,5 +99,5 @@ module.exports = {
   createVideogame,
   getVideogameById,
   updateVideogame,
-  deleteVideogame
+  deleteVideogame,
 };

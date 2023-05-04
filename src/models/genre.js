@@ -7,6 +7,11 @@ const genreSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+    }
   },
   { versionKey: false }
 );
