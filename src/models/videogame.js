@@ -18,11 +18,34 @@ const videogameSchema = mongoose.Schema(
       type: Number,
     },
     platforms: {
-      type: Array,
+      type: [
+        {
+          id: {
+            type: Number,
+            required: true,
+          },
+          name: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
       required: true,
     },
     genres: {
-      type: Array,
+      type: [
+        {
+          name: {
+            type: String,
+            required: true,
+          },
+          slug: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
+      required: true,
     },
     background_image: {
       type: String,

@@ -1,10 +1,5 @@
-const { findById } = require("../models/videogame");
 const Videogame = require("../models/videogame");
-const {
-  getAllVideogames,
-  findVideogames,
-  findVideogame,
-} = require("../utils/index");
+const { getAllVideogames, findVideogame } = require("../utils/index");
 
 const createVideogame = async (req, res) => {
   try {

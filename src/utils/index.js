@@ -12,24 +12,26 @@ const getDbVideogames = async (name, genres, platforms) => {
   }
   if (genres) {
     dbVideogames = dbVideogames.filter(
-      (videogame) => videogame.genres.find((g) => g === genres) === genres
+      (videogame) => videogame.genres.find((g) => g.slug === genres) === genres
     );
   }
   if (platforms) {
     dbVideogames = dbVideogames.filter(
       (videogame) =>
-        videogame.platforms.find((p) => p === platforms) === platforms
+        videogame.platforms.find((p) => p.id === platforms) === platforms
     );
   }
 
   const dbVideogamesClean = dbVideogames.map((videogame) => {
+    const platforms = videogame.genres.map((platform) => platform.name);
+    const genres = videogame.genres.map((genre) => genre.name);
     return {
       id: videogame._id,
       name: videogame.name,
       released: videogame.released,
       rating: videogame.rating,
-      platforms: videogame.platforms,
-      genres: videogame.genres,
+      platforms,
+      genres,
       background_image: videogame.background_image,
       createdInDb: videogame.createdInDb,
     };
@@ -85,33 +87,6 @@ const getAllVideogames = async (name, genres, platforms) => {
   return [...dbVideogames, ...apiVideogames];
 };
 
-const findVideogames = async (name) => {
-  const dbVideogames = await getDbVideogames();
-  const filteredDbVideogames = dbVideogames.filter((videogame) =>
-    videogame.name?.toLowerCase().includes(name.toLowerCase())
-  );
-  const response = await axios.get(
-    `https://api.rawg.io/api/games?key=${API_KEY}&search=${name}`
-  );
-  const filteredApiVideogames = response.data.results.map((videogame) => {
-    const platforms = videogame.platforms?.map(
-      (platform) => platform.platform.name
-    );
-    const genres = videogame.genres.map((genre) => genre.name);
-    return {
-      id: videogame.id,
-      name: videogame.name,
-      released: videogame.released,
-      rating: videogame.rating,
-      platforms,
-      genres,
-      background_image: videogame.background_image,
-    };
-  });
-
-  return [...filteredDbVideogames, ...filteredApiVideogames];
-};
-
 const findVideogame = async (id) => {
   if (id.length !== 24) {
     const response = await axios.get(
@@ -133,13 +108,23 @@ const findVideogame = async (id) => {
       background_image: videogame.background_image,
     };
   } else {
-    const videogame = Videogame.findById(id);
-    return videogame;
+    const videogame = await Videogame.findById(id);
+    const platforms = videogame.platforms?.map((platform) => platform.name);
+    const genres = videogame.genres?.map((genre) => genre.name);
+    return {
+      id: videogame._id,
+      name: videogame.name,
+      description: videogame.description,
+      released: videogame.released,
+      rating: videogame.rating,
+      platforms,
+      genres,
+      background_image: videogame.background_image,
+    };
   }
 };
 
 module.exports = {
   getAllVideogames,
-  findVideogames,
   findVideogame,
 };
