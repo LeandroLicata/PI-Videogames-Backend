@@ -63,6 +63,9 @@ const getApiVideogames = async (name, genres, platforms) => {
         (platform) => platform.platform.name
       );
       const genres = videogame.genres.map((genre) => genre.name);
+      const short_screenshots = videogame.short_screenshots.map(
+        (screenshot) => screenshot.image
+      );
       return {
         id: videogame.id,
         name: videogame.name,
@@ -71,6 +74,7 @@ const getApiVideogames = async (name, genres, platforms) => {
         platforms,
         genres,
         background_image: videogame.background_image,
+        short_screenshots,
       };
     });
     videogamesArray = [...videogamesArray, ...apiVideogames];
