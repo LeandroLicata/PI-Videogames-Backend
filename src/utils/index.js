@@ -101,6 +101,10 @@ const findVideogame = async (id) => {
       (platform) => platform.platform.name
     );
     const genres = videogame.genres.map((genre) => genre.name);
+    const screenshotsResponse = await axios.get(
+      `https://api.rawg.io/api/games/${id}/screenshots?key=${API_KEY}`
+    );
+    const screenshots = screenshotsResponse.data.results.map((s) => s.image);
     return {
       id: videogame.id,
       name: videogame.name,
@@ -110,6 +114,8 @@ const findVideogame = async (id) => {
       platforms,
       genres,
       background_image: videogame.background_image,
+      background_image_additional: videogame.background_image_additional,
+      screenshots,
     };
   } else {
     const videogame = await Videogame.findById(id);
