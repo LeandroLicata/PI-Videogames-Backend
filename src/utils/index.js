@@ -11,19 +11,19 @@ const getDbVideogames = async (name, genres, platforms) => {
     );
   }
   if (genres) {
-    dbVideogames = dbVideogames.filter(
-      (videogame) => videogame.genres.find((g) => g.slug === genres) === genres
+    dbVideogames = dbVideogames.filter((videogame) =>
+      videogame.genres.some((g) => g.slug === genres)
     );
   }
+
   if (platforms) {
-    dbVideogames = dbVideogames.filter(
-      (videogame) =>
-        videogame.platforms.find((p) => p.id === platforms) === platforms
+    dbVideogames = dbVideogames.filter((videogame) =>
+      videogame.platforms.some((p) => p.id === platforms)
     );
   }
 
   const dbVideogamesClean = dbVideogames.map((videogame) => {
-    const platforms = videogame.genres.map((platform) => platform.name);
+    const platforms = videogame.platforms.map((platform) => platform.name);
     const genres = videogame.genres.map((genre) => genre.name);
     return {
       id: videogame._id,
@@ -88,7 +88,7 @@ const getApiVideogames = async (name, genres, platforms) => {
 const getAllVideogames = async (name, genres, platforms) => {
   const dbVideogames = await getDbVideogames(name, genres, platforms);
   const apiVideogames = await getApiVideogames(name, genres, platforms);
-  return [...dbVideogames, ...apiVideogames];
+  return [...apiVideogames, ...dbVideogames];
 };
 
 const findVideogame = async (id) => {
