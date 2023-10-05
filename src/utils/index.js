@@ -56,7 +56,7 @@ const getApiVideogames = async (name, genres, platforms) => {
 
   let response = await axios.get(url);
 
-  while (pages < 5) {
+  while (pages < 2) {
     pages++;
     const apiVideogames = response.data.results.map((videogame) => {
       const platforms = videogame.platforms?.map(
