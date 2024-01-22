@@ -40,7 +40,7 @@ const getDbVideogames = async (name, genres, platforms) => {
 };
 
 const getApiVideogames = async (name, genres, platforms) => {
-  let pages = 0;
+  // let pages = 0;
   let videogamesArray = [];
   let url = `https://api.rawg.io/api/games?key=${API_KEY}`;
 
@@ -56,8 +56,8 @@ const getApiVideogames = async (name, genres, platforms) => {
 
   let response = await axios.get(url);
 
-  while (pages < 2) {
-    pages++;
+  // while (pages < 2) {
+    // pages++;
     const apiVideogames = response.data.results.map((videogame) => {
       const platforms = videogame.platforms?.map(
         (platform) => platform.platform.name
@@ -78,10 +78,10 @@ const getApiVideogames = async (name, genres, platforms) => {
       };
     });
     videogamesArray = [...videogamesArray, ...apiVideogames];
-    response.data.next
-      ? (response = await axios.get(response.data.next))
-      : (pages = 5);
-  }
+    // response.data.next
+    //   ? (response = await axios.get(response.data.next))
+    //   : (pages = 5);
+  // }
   return videogamesArray;
 };
 
