@@ -37,12 +37,6 @@ Este proyecto corresponde al backend de **Gamepedia**, una aplicación donde los
 
    Para la base de datos, podés crear una cuenta gratuita en [MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database) y generar un URI de conexión para usar como valor de `MONGODB_URI`.
 
-4. Ejecuta las migraciones y/o sincroniza la base de datos con Sequelize:
-
-   ```bash
-   npm run sync
-   ```
-
 5. Inicia el servidor:
 
    ```bash
@@ -80,4 +74,3 @@ Si no existen, las obtiene desde la API de RAWG, las almacena en la base de dato
 
 - El proyecto consume datos de la [API pública de RAWG](https://rawg.io/apidocs), por lo que es necesario contar con una API key válida.
 - Los videojuegos creados mediante `POST /videogames` se almacenan localmente en la base de datos y pueden tener uno o varios géneros y plataformas asociados.
-- Puedes extender este backend para agregar funcionalidades como autenticación de usuarios, favoritos, puntuaciones, etc.
