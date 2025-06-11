@@ -15,8 +15,8 @@ Este proyecto corresponde al backend de **Gamepedia**, una aplicación donde los
 1. Clona este repositorio en tu máquina local:
 
    ```bash
-   git clone https://github.com/tuUsuario/gamepedia-backend.git
-   cd gamepedia-backend
+   git clone https://github.com/LeandroLicata/PI-Videogames-Backend
+   cd PI-Videogames-Backend
    ```
 
 2. Instala las dependencias usando npm:
